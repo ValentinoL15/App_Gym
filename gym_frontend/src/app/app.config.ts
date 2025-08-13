@@ -3,7 +3,20 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideToastr } from 'ngx-toastr';
+import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(withEventReplay())]
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(withFetch()),provideClientHydration(withEventReplay()), provideAnimations(),
+    provideToastr({
+      preventDuplicates: true,              // Evita mensajes duplicados
+      progressBar: true,                    // Muestra barra de progreso
+      timeOut: 3000,                        // Duración 5 segundos
+      closeButton: true,                    // Botón de cerrar visible
+      tapToDismiss: true,                  // Requiere clic explícito para cerrar
+      enableHtml: true                      // Permite HTML en mensajes
+    }),
+    provideAnimationsAsync()]
 };
