@@ -7,6 +7,9 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { providePrimeNG } from 'primeng/config';
+import Aura from '@primeuix/themes/aura';
+
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(withFetch()),provideClientHydration(withEventReplay()), provideAnimations(),
@@ -18,5 +21,11 @@ export const appConfig: ApplicationConfig = {
       tapToDismiss: true,                  // Requiere clic explícito para cerrar
       enableHtml: true                      // Permite HTML en mensajes
     }),
+      provideAnimationsAsync(),
+        providePrimeNG({
+            theme: {
+                preset: Aura
+            }
+        }),
     provideAnimationsAsync()]
 };
