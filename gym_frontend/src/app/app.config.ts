@@ -3,16 +3,18 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
+import { tokenInterceptor } from './core/interceptors/token.interceptor';
+import { spinnerInterceptor } from './core/interceptors/spinner.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(withFetch()),provideClientHydration(withEventReplay()), provideAnimations(),
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideHttpClient(withFetch(), withInterceptors([tokenInterceptor, spinnerInterceptor])),provideClientHydration(withEventReplay()), provideAnimations(),
     provideToastr({
       preventDuplicates: true,              // Evita mensajes duplicados
       progressBar: true,                    // Muestra barra de progreso

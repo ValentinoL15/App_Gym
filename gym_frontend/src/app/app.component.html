@@ -1,2 +1,8 @@
 <router-outlet></router-outlet>
+@if (spinnerService.loading()) {
+<div class="spinner-overlay">
+    <p-progress-spinner strokeWidth="8" fill="transparent" animationDuration=".5s" />
+</div>
+}
+
 
