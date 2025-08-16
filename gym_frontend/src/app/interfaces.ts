@@ -9,11 +9,11 @@ export interface User {
 }
 
 export interface Ejercicio {
-    ejercicio_id: string,
+    ejercicio_id?: string,
     name: string,
     description: string,
     category: string,
-    usuario: User
+    usuario?: User
 }
 
 export interface Rutina {

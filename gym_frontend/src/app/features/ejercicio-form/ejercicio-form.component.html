@@ -1,23 +1,34 @@
-<form>
+<form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-floating mb-2" style="margin: 20px; width: 100%;">
-        <input type="email" class="form-control" id="floatingInput" placeholder="Nombre del Ejercicio">
+        <input type="text" class="form-control" id="floatingInput" placeholder="Nombre del Ejercicio" formControlName="name">
         <label for="floatingInput">Nombre</label>
     </div>
 
     <div class="form-floating " style="margin: 20px; width: 100%;">
-        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" 
+        <textarea class="form-control" placeholder="Leave a comment here" formControlName="description" id="floatingTextarea2" 
             style="height: 100px; width: 100%;"></textarea>
         <label for="floatingTextarea2">Descripción del ejercicio</label>
     </div>
 
     <div class="form-floating" style="margin: 20px; width: 100%;">
-  <select class="form-select" id="floatingSelect" aria-label="Fase">
+  <select class="form-select" id="floatingSelect" aria-label="Fase" formControlName="category">
     <option selected disabled>Elige una opción</option>
-    <option value="1">Entrada en calor</option>
-    <option value="2">Rutina</option>
-    <option value="3">Finalización</option>
+    <option value="PECHO">Pecho</option>
+    <option value="ESPALDA">Espalda</option>
+    <option value="HOMBROS">Hombros</option>
+    <option value="BICEPS">Biceps</option>
+    <option value="TRICEPS">Triceps</option>
+    <option value="ABDOMINALES">Abdominales</option>
+    <option value="PIERNAS">Piernas</option>
+    <option value="FULLBODY">Full Body</option>
+    <option value="CARDIO">Cardio</option>
+    <option value="FLEXIBILIDAD">Flexibilidad</option>
   </select>
-  <label for="floatingSelect">Fase de entrenamiento</label>
+  <label for="floatingSelect">Categoría</label>
+</div>
+
+<div style="display: flex; justify-content: end; width: 100%;">
+    <button type="submit" class="btn btn-primary">{{ ejercicioToEdit ? 'Guardar Cambios' : 'Crear' }}</button>
 </div>
 
 </form>
