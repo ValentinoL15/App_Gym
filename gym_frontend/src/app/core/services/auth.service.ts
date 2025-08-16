@@ -31,7 +31,11 @@ export class AuthService {
     this.router.navigate(["/login"])
   }
 
-  getToken() {
-    return localStorage.getItem('token')
+   getToken() {
+    if (typeof window !== 'undefined') { // Esto asegura que estamos en el navegador
+      return localStorage.getItem('token');
+    }
+    return null; // o '' si prefieres
   }
+
 }

@@ -30,11 +30,17 @@ export class EjercicioFormComponent implements OnInit,OnChanges{
     })
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-      if(changes['ejercicioToEdit']  && !changes['ejercicioToEdit'].firstChange) {
-        this.patchForm()
-      }
+ ngOnChanges(changes: SimpleChanges): void {
+  if (changes['ejercicioToEdit']) {
+    if (this.ejercicioToEdit) {
+      // Llenar formulario con los datos del ejercicio
+      this.patchForm();
+    } else {
+      // Si es null, resetear formulario
+      this.form?.reset();
+    }
   }
+}
 
   private patchForm() {
     if (this.ejercicioToEdit) {
@@ -47,7 +53,7 @@ export class EjercicioFormComponent implements OnInit,OnChanges{
   }
 
   submit() {
-    if(this.form.valid){
+    
       const ejercicioData = this.form.value
       console.log(this.form)
 
@@ -58,6 +64,6 @@ export class EjercicioFormComponent implements OnInit,OnChanges{
       }
 
     }
-  }
+  
 
 }

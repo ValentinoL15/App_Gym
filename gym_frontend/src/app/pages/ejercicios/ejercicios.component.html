@@ -1,28 +1,31 @@
 <app-header></app-header>
 <section class="ejercicios-page">
     <div class="button">
-        <p-button label="Crear Ejercicio" [raised]="true" severity="contrast" (onClick)="showDialog()" />
+        <p-button label="Crear Ejercicio" [raised]="true" severity="contrast" (onClick)="showDialog(null)" />
     </div>
 
     <div class="cards-container">
-    @if (ejercicios.length >= 1) {
-    @for (ejercicio of ejercicios; track ejercicio.ejercicio_id) {
-        
-            <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">{{ejercicio.name}}</h5>
-            <h6 class="card-subtitle mb-2 text-body-secondary">{{ejercicio.category}}</h6>
-            <p class="card-text">{{ejercicio.description}}.</p>
-            <div style="width: 100%; display: flex; justify-content: space-between;">
-                 <button type="button" class="btn btn-outline-danger">Eliminar</button>
-            <button type="button" class="btn btn-outline-primary">Editar</button>
+        @if (ejercicios.length >= 1) {
+        @for (ejercicio of ejercicios; track ejercicio.ejercicio_id) {
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ejercicio.name}}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{ejercicio.category}}</h6>
+                <p class="card-text">{{ejercicio.description}}.</p>
+                <div style="width: 100%; display: flex; justify-content: space-between;">
+                    <button type="button" class="btn btn-outline-danger">Eliminar</button>
+                    <button type="button" class="btn btn-outline-primary" (click)="showDialog(ejercicio.ejercicio_id)">Editar</button>
+                </div>
             </div>
-           
         </div>
+        }
+        } @else {
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+                <p>Crea ejercicios para poder armar planes</p>
+            </div>
+        }
     </div>
-    }
-    }
-</div>
 
 </section>
 

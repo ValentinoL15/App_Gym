@@ -1,1 +1,22 @@
 <app-header></app-header>
+
+<div class="cards-container">
+        @if (planes.length >= 1) {
+        @for (plan of planes; track plan.plan_id) {
+
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{"Desde " + plan.desde }}</h5>
+                <h6 class="card-subtitle mb-2 text-body-secondary">{{"Hasta " + plan.hasta}}</h6>
+                <p class="card-text"><span style="font-weight: bold;">- Finalidad: </span>{{ plan.finalidad}}.</p>
+                <p class="card-text"><span style="font-weight: bold;">- Rutinas: </span>{{ plan.rutinas.length}}.</p>
+                <p class="card-text"><span style="font-weight: bold;">- Seguimientos: </span>{{ plan.seguimientos.length}}.</p>
+            </div>
+        </div>
+        }
+        } @else {
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+                <p>Crea ejercicios para poder armar planes</p>
+            </div>
+        }
+    </div>

@@ -13,13 +13,14 @@ import { ToastrService } from 'ngx-toastr';
   imports: [HeaderComponent, ButtonModule, Dialog,InputTextModule,EjercicioFormComponent],
   templateUrl: './ejercicios.component.html',
   styleUrl: './ejercicios.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.Default
 })
 export class EjerciciosComponent implements OnInit{
 
   actividadService = inject(ActividadesService)
   toast = inject(ToastrService)
   cdr = inject(ChangeDetectorRef)
+  id: string | null = null;
 
   ejercicioSeleccionado: Ejercicio | null = null;
   ejercicios: Ejercicio[] = [];
@@ -29,35 +30,67 @@ export class EjerciciosComponent implements OnInit{
     this.getEjercicios()
   }
 
-  showDialog() {
-    this.visible = true;
+  showDialog(id: string | null) {
+  this.id = id;
+
+  if (id) {
+    // Si hay id, es editar: buscar ejercicio
+    const ejercicio = this.ejercicios.find(e => e.ejercicio_id === id);
+    if (ejercicio) {
+      this.ejercicioSeleccionado = { ...ejercicio }; // clon para no mutar la lista
+    }
+  } else {
+    // Si es crear, limpiar
+    this.ejercicioSeleccionado = null;
   }
+
+  this.visible = true;
+}
+
 
   getEjercicios() {
     this.actividadService.getEjercicios().subscribe({
       next: (res: Ejercicio[]) => {
         this.ejercicios = res
+        console.log(this.ejercicios)
       },
       error: err => {
-        this.toast.error(err.error.message)
-        console.log(err)
+      console.log(err);
       }
     })
   }
 
   guardarEjercicio(data: any) {
-    console.log(data)
-    this.actividadService.createEjercicio(data).subscribe({
+
+    if(this.id){
+      this.actividadService.updateEjercicio(this.id,data).subscribe({
+        next: (res : any) => {
+          this.toast.success("Ejercicio creado con éxito")
+          this.visible = false
+          this.id = null
+          this.getEjercicios()
+        },
+        error: err => {
+          console.log(err)
+        }
+      })
+    } else {
+      this.actividadService.createEjercicio(data).subscribe({
       next: (res : Ejercicio) => {
         this.toast.success("Ejercicio creado con éxito")
         this.visible = false
-        this.cdr.detectChanges()
+        this.getEjercicios()
       },
       error: err => {
-        this.toast.error(err.error.message)
-        console.log(err)
+         const mensaje = err?.error?.message || err?.message || 'Error desconocido';
+      this.toast.error(mensaje);
+      console.log(err);
+       
       }
     })
   }
+    }
+
+    
 
 }
