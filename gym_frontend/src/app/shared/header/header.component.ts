@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit{
 
   items: MenuItem[] | undefined;
 
-   ngOnInit() {
+  ngOnInit() {
         this.items = [
             {
                 label: 'Home',
@@ -33,12 +33,15 @@ export class HeaderComponent implements OnInit{
                 label: 'Ejercicios',
                 icon: 'pi pi-star',
                 command: () => {
-                  this.router.navigate(["/register"])
+                  this.router.navigate(["/ejercicios"])
                 }
             },
             {
                 label: 'Planes',
                 icon: 'pi pi-check',
+                command: () => {
+                  this.router.navigate(["/planes"])
+                }
             },
             {
                 label: 'Perfil',

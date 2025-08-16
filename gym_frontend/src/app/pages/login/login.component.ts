@@ -38,9 +38,11 @@ export class LoginComponent {
       next: (response: any) => {
         this.toastr.success(response.message)
         this.router.navigate(["/home"])
+        localStorage.setItem('token', response.jwt)
       },
       error: err => {
-        this.toastr.error(err.error.message)
+        
+        console.log("Mi error:",err)
       }
     })
   }

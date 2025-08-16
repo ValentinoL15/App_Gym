@@ -1,0 +1,15 @@
+<app-header></app-header>
+<section class="ejercicios-page">
+    <div class="button">
+        <p-button label="Crear Ejercicio" [raised]="true" severity="contrast" (onClick)="showDialog()"/>
+    </div>
+    
+
+</section>
+
+<p-dialog header="Crear Ejercicio" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+    <div style="display: flex; width: 100%;">
+        <app-ejercicio-form></app-ejercicio-form>
+    </div>
+    
+</p-dialog>
