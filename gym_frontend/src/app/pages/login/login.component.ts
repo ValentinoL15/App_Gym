@@ -34,11 +34,12 @@ export class LoginComponent {
       username: this.form.value.username,
       password: this.form.value.password
     }
+    console.log(formulario)
+    console.log(localStorage.getItem('token'))
     this.authService.login(formulario).subscribe({
       next: (response: any) => {
         this.toastr.success(response.message)
         this.router.navigate(["/home"])
-        localStorage.setItem('token', response.jwt)
       },
       error: err => {
         

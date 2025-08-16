@@ -1,7 +1,23 @@
 <form>
-    <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">Email address</label>
+    <div class="form-floating mb-2" style="margin: 20px; width: 100%;">
+        <input type="email" class="form-control" id="floatingInput" placeholder="Nombre del Ejercicio">
+        <label for="floatingInput">Nombre</label>
     </div>
+
+    <div class="form-floating " style="margin: 20px; width: 100%;">
+        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" 
+            style="height: 100px; width: 100%;"></textarea>
+        <label for="floatingTextarea2">Descripción del ejercicio</label>
+    </div>
+
+    <div class="form-floating" style="margin: 20px; width: 100%;">
+  <select class="form-select" id="floatingSelect" aria-label="Fase">
+    <option selected disabled>Elige una opción</option>
+    <option value="1">Entrada en calor</option>
+    <option value="2">Rutina</option>
+    <option value="3">Finalización</option>
+  </select>
+  <label for="floatingSelect">Fase de entrenamiento</label>
+</div>
 
 </form>
