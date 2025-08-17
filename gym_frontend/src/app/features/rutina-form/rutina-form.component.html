@@ -1,12 +1,13 @@
 <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="form-floating" style="margin: 20px; width: 100%;">
-        <select class="form-select" id="floatingSelect" aria-label="Fase" formControlName="ejercicio">
+        <select class="form-select" id="floatingSelect" formControlName="ejercicio_id">
             <option value="" selected disabled>Selecciona un ejercicio</option>
             @for (ejercicio of ejercicios; track ejercicio.name) {
-                <option [value]="ejercicio">{{ejercicio.name}}</option>
+                <option [value]="ejercicio.ejercicio_id">{{ejercicio.name}}</option>
             }
             
         </select>
+        <label for="floatingSelect">Ejercicio</label>
     </div>
 
     <div class="form-floating " style="margin: 20px; width: 100%;">
@@ -20,8 +21,18 @@
     </div>
 
     <div class="form-floating" style="margin: 20px; width: 100%;">
-        <input type="number" class="form-select" id="floatingSelect" aria-label="Fase" formControlName="peso">
+        <input type="number" class="form-select" id="floatingSelect" placeholder="Peso" formControlName="peso">
         <label for="floatingSelect">Peso</label>
+    </div>
+
+      <div class="form-floating" style="margin: 20px; width: 100%;">
+        <select type="number" class="form-select" id="floatingSelect" aria-label="Fase" formControlName="fase">
+            <option value="" selected disabled>Selecciona una fase</option>
+            <option value="INICIO">Entrada en Calor</option>
+            <option value="DESARROLLO">Rutina</option>
+            <option value="FINALIZACION">Finalización</option>
+        </select>
+        <label for="floatingSelect">Fase</label>
     </div>
 
     <div style="display: flex; justify-content: end; width: 100%;">

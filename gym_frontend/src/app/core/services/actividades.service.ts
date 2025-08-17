@@ -50,7 +50,11 @@ getEjercicio(id: string): Observable<Ejercicio> {
 
   /************************************************RUTINA*******************************************************/
 
-  createRutina(id:string, form:Rutina): Observable<any> {
-    return this.#http.post<any>(`${this.API_URL}/rutinas/crear-rutina`, form)
+  getRutinas(): Observable<Rutina[]> {
+    return this.#http.get<Rutina[]>(`${this.API_URL}/rutinas`)
+  }
+
+  createRutina(id_plan:string, form:Rutina): Observable<any> {
+    return this.#http.post<any>(`${this.API_URL}/rutinas/crear-rutina/${id_plan}`, form)
   }
 }

@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, inject, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { Ejercicio, Rutina } from '../../interfaces';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActividadesService } from '../../core/services/actividades.service';
 import { CommonModule } from '@angular/common';
 
 
 @Component({
   selector: 'app-rutina-form',
-  imports: [MultiSelectModule, ReactiveFormsModule, CommonModule],
+  imports: [MultiSelectModule, ReactiveFormsModule, CommonModule,FormsModule],
   templateUrl: './rutina-form.component.html',
   styleUrl: './rutina-form.component.scss',
   changeDetection: ChangeDetectionStrategy.Default
@@ -29,7 +29,7 @@ export class RutinaFormComponent implements OnInit,OnChanges{
 
   ngOnInit(): void {
       this.form = this.fb.group({
-        ejercicio: [this.rutinaToEdit?.ejercicio || '', Validators.required],
+        ejercicio_id: [this.rutinaToEdit?.ejercicio.ejercicio_id || '', Validators.required],
         repeticiones: [this.rutinaToEdit?.repeticiones || '', Validators.required],
         series: [this.rutinaToEdit?.series || '', Validators.required],
         peso: [this.rutinaToEdit?.peso || '', Validators.required],
@@ -52,7 +52,7 @@ export class RutinaFormComponent implements OnInit,OnChanges{
    private patchForm() {
     if (this.rutinaToEdit) {
       this.form.patchValue({
-        ejercicio: this.rutinaToEdit.ejercicio,
+        ejercicio_id: this.rutinaToEdit.ejercicio.ejercicio_id,
         repeticiones: this.rutinaToEdit.repeticiones,
         series: this.rutinaToEdit.series,
         peso: this.rutinaToEdit.peso,
@@ -64,7 +64,7 @@ export class RutinaFormComponent implements OnInit,OnChanges{
     submit() {
     
       const rutinaData = this.form.value
-      console.log(this.form)
+      console.log(rutinaData)
 
       if(this.rutinaToEdit) {
         this.formSubmit.emit({ ...rutinaData, rutina_id: this.rutinaToEdit.rutina_id })

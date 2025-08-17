@@ -34,7 +34,6 @@ export class LoginComponent {
       username: this.form.value.username,
       password: this.form.value.password
     }
-    console.log(formulario)
     console.log(localStorage.getItem('token'))
     this.authService.login(formulario).subscribe({
       next: (response: any) => {

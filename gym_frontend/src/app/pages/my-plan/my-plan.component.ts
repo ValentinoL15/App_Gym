@@ -25,12 +25,14 @@ export class MyPlanComponent implements OnInit{
   plan: Plan | null = null;
   rutinaSeleccionada: Rutina | null = null;
   ejercicios: Ejercicio[] = [];
+  rutinas: Rutina[] = [];
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.id = params['id']
     })
     this.getEjercicios()
+    this.getRutinas()
   }
 
   getEjercicios() {
@@ -55,20 +57,35 @@ export class MyPlanComponent implements OnInit{
     })
   }
 
+  getRutinas() {
+    this.actividadService.getRutinas().subscribe({
+      next: (res: any) => {
+        this.rutinas = res
+        console.log("ruti" , this.rutinas)
+      },
+      error: err => {
+        console.log(err)
+      }
+    })
+  }
+
       showDialog() {
       this.visible = true
     }
 
     guardarRutina(data : any) {
-      this.actividadService.createEjercicio(data).subscribe({
+      this.actividadService.createRutina(this.id,data).subscribe({
         next: (res : any) => {
           this.toast.success("Rutina creada con éxito")
           this.visible = false
           this.getPlan()
+          this.getRutinas()
+          this.getEjercicios()
         },
         error: err => {
           console.log(err)
         }
       })
     }
+    
 }
