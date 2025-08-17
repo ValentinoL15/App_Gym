@@ -1,0 +1,31 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-floating" style="margin: 20px; width: 100%;">
+        <select class="form-select" id="floatingSelect" aria-label="Fase" formControlName="ejercicio">
+            <option value="" selected disabled>Selecciona un ejercicio</option>
+            @for (ejercicio of ejercicios; track ejercicio.name) {
+                <option [value]="ejercicio">{{ejercicio.name}}</option>
+            }
+            
+        </select>
+    </div>
+
+    <div class="form-floating " style="margin: 20px; width: 100%;">
+        <input type="number" class="form-control" placeholder="Número de series" formControlName="series" />
+        <label for="floatingTextarea2">Series</label>
+    </div>
+
+     <div class="form-floating " style="margin: 20px; width: 100%;">
+        <input type="number" class="form-control" placeholder="Número de repeticiones" formControlName="repeticiones" />
+        <label for="floatingTextarea2">Repeticiones</label>
+    </div>
+
+    <div class="form-floating" style="margin: 20px; width: 100%;">
+        <input type="number" class="form-select" id="floatingSelect" aria-label="Fase" formControlName="peso">
+        <label for="floatingSelect">Peso</label>
+    </div>
+
+    <div style="display: flex; justify-content: end; width: 100%;">
+        <button type="submit" class="btn btn-primary">{{ rutinaToEdit ? 'Guardar Cambios' : 'Crear' }}</button>
+    </div>
+
+</form>

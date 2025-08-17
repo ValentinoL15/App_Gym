@@ -12,7 +12,11 @@
     <div class="form-floating " style="margin: 20px; width: 100%;">
         <textarea class="form-control" placeholder="Finalidad del plan" formControlName="finalidad" id="floatingTextarea2" 
             style="height: 100px; width: 100%;"></textarea>
-        <label for="floatingTextarea2">Descripción del ejercicio</label>
+        <label for="floatingTextarea2">Finalidad del plan</label>
     </div>
+
+    <div style="display: flex; justify-content: end; width: 100%;">
+    <button type="submit" class="btn btn-primary">{{ planToEdit ? 'Guardar Cambios' : 'Crear' }}</button>
+</div>
 
 </form>

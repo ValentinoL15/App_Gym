@@ -12,5 +12,6 @@ export const routes: Routes = [
     { path: "register", component: RegisterComponent },
     { path: "home", loadComponent:() => import('./pages/home/home.component').then(m => m.HomeComponent) },
     { path: "ejercicios", loadComponent:() => import('./pages/ejercicios/ejercicios.component').then(m => m.EjerciciosComponent)},
-    { path: "planes", loadComponent:() => import('./pages/planes/planes.component').then(m => m.PlanesComponent) }
+    { path: "planes", loadComponent:() => import('./pages/planes/planes.component').then(m => m.PlanesComponent) },
+    { path: "myPlan/:id", loadComponent:() => import('./pages/my-plan/my-plan.component').then(m => m.MyPlanComponent) }
 ];

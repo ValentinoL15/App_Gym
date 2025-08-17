@@ -59,8 +59,10 @@ export class EjercicioFormComponent implements OnInit,OnChanges{
 
       if(this.ejercicioToEdit) {
         this.formSubmit.emit({ ...ejercicioData, ejercicio_id: this.ejercicioToEdit.ejercicio_id })
+        this.form.reset()
       } else {
         this.formSubmit.emit(ejercicioData)
+        this.form.reset()
       }
 
     }

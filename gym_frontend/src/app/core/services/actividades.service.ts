@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Ejercicio, Plan } from '../../interfaces';
+import { Ejercicio, Plan, Rutina } from '../../interfaces';
 import { FORMERR } from 'dns';
 
 @Injectable({
@@ -48,5 +48,9 @@ getEjercicio(id: string): Observable<Ejercicio> {
     return this.#http.put<any>(`${this.API_URL}/planes/edit-plan/${id}`, form)
   }
 
-  
+  /************************************************RUTINA*******************************************************/
+
+  createRutina(id:string, form:Rutina): Observable<any> {
+    return this.#http.post<any>(`${this.API_URL}/rutinas/crear-rutina`, form)
+  }
 }
