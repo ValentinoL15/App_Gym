@@ -23,13 +23,6 @@ export class HeaderComponent implements OnInit{
   ngOnInit() {
         this.items = [
             {
-                label: 'Home',
-                icon: 'pi pi-home',
-                command: () => {
-                  this.router.navigate(["/home"])
-                }
-            },
-            {
                 label: 'Ejercicios',
                 icon: 'pi pi-star',
                 command: () => {
@@ -45,7 +38,10 @@ export class HeaderComponent implements OnInit{
             },
             {
                 label: 'Perfil',
-                icon: 'pi pi-user'
+                icon: 'pi pi-user',
+                 command: () => {
+                  this.router.navigate(["/profile"])
+                }
             }
         ]
   }

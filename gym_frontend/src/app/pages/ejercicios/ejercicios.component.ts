@@ -60,6 +60,18 @@ export class EjerciciosComponent implements OnInit{
     })
   }
 
+  deleteEjercicio(id:string) {
+    this.actividadService.deleteEjercicio(id).subscribe({
+      next: (res : any) => {
+        this.toast.success(res.message)
+        this.getEjercicios()
+      },
+      error: err => {
+        this.toast.error(err.error.message,"Error")
+      }
+    })
+  }
+
   guardarEjercicio(data: any) {
 
     if(this.id){

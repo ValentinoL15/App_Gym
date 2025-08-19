@@ -38,7 +38,7 @@ export class LoginComponent {
     this.authService.login(formulario).subscribe({
       next: (response: any) => {
         this.toastr.success(response.message)
-        this.router.navigate(["/home"])
+        this.router.navigate(["/ejercicios"])
       },
       error: err => {
         

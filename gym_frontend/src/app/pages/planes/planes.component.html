@@ -10,7 +10,7 @@
 
             <p-accordion [value]="plan.plan_id" style="width: 100%;">
         <p-accordion-panel value="0">
-            <p-accordion-header> {{ "Desde: " + plan.desde + " - " + "Hasta: " + plan.hasta}}</p-accordion-header>
+            <p-accordion-header> {{ "Desde: " + (plan.desde | date:'longDate') + " - " + "Hasta: " + (plan.hasta | date:'longDate') }}</p-accordion-header>
             <p-accordion-content>
                 <p class="m-0">
                     <span style="font-weight: bold;">Finalidad: </span>

@@ -8,10 +8,11 @@ import { Dialog } from 'primeng/dialog';
 import { PlanFormComponent } from '../../features/plan-form/plan-form.component';
 import { AccordionModule } from 'primeng/accordion';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-planes',
-  imports: [HeaderComponent, ButtonModule,Dialog, PlanFormComponent,AccordionModule],
+  imports: [HeaderComponent, ButtonModule,Dialog, PlanFormComponent,AccordionModule,DatePipe],
   templateUrl: './planes.component.html',
   styleUrl: './planes.component.scss',
   changeDetection: ChangeDetectionStrategy.Default

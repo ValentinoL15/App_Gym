@@ -30,6 +30,10 @@ getEjercicio(id: string): Observable<Ejercicio> {
     return this.#http.put<Ejercicio>(`${this.API_URL}/ejercicios/editar-ejercicio/${id}`, form)
   }
 
+  deleteEjercicio(id:String) {
+    return this.#http.delete(`${this.API_URL}/ejercicios/eliminar-ejercicio/${id}`)
+  }
+
   /**********************************************PLANES********************************************/ 
 
   getPlanes(): Observable<Plan[]> {
