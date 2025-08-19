@@ -19,6 +19,7 @@ export class RutinaFormComponent implements OnInit,OnChanges{
 
   @Input() rutinaToEdit: Rutina | null = null
   @Input() ejercicios: Ejercicio[] = [];
+  @Input() onlyRead: boolean = false
   @Output() formSubmit = new EventEmitter<any>();
 
   form!: FormGroup

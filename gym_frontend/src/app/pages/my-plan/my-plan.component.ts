@@ -15,17 +15,19 @@ import { ToastrService } from 'ngx-toastr';
   styleUrl: './my-plan.component.scss',
   changeDetection: ChangeDetectionStrategy.Default
 })
-export class MyPlanComponent implements OnInit{
+export class MyPlanComponent implements OnInit {
 
   actividadService = inject(ActividadesService)
   route = inject(ActivatedRoute)
   toast = inject(ToastrService)
-  id:any
+  id: any
   visible: boolean = false;
   plan: Plan | null = null;
   rutinaSeleccionada: Rutina | null = null;
   ejercicios: Ejercicio[] = [];
   rutinas: Rutina[] = [];
+  fase: string | null = null;
+  id_rutina: any;
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -37,7 +39,7 @@ export class MyPlanComponent implements OnInit{
 
   getEjercicios() {
     this.actividadService.getEjercicios().subscribe({
-      next: (res : any) => {
+      next: (res: any) => {
         this.ejercicios = res
       },
       error: err => {
@@ -48,7 +50,7 @@ export class MyPlanComponent implements OnInit{
 
   getPlan() {
     this.actividadService.getPlan(this.id).subscribe({
-      next: (res : any) => {
+      next: (res: any) => {
         this.plan = res
       },
       error: err => {
@@ -58,10 +60,10 @@ export class MyPlanComponent implements OnInit{
   }
 
   getRutinas() {
-    this.actividadService.getRutinas().subscribe({
+    this.actividadService.getRutinas(this.id).subscribe({
       next: (res: any) => {
         this.rutinas = res
-        console.log("ruti" , this.rutinas)
+        console.log("ruti", this.rutinas)
       },
       error: err => {
         console.log(err)
@@ -69,13 +71,45 @@ export class MyPlanComponent implements OnInit{
     })
   }
 
-      showDialog() {
-      this.visible = true
+  showDialog(fase: string, id: any) {
+    this.visible = true
+    this.fase = fase
+    this.id_rutina = id
+    if (id) {
+      // Si hay id, es editar: buscar ejercicio
+      const rutina = this.rutinas.find(e => e.rutina_id === id);
+      if (rutina) {
+        this.rutinaSeleccionada = { ...rutina }; // clon para no mutar la lista
+      }
+    } else {
+      // Si es crear, limpiar
+      this.rutinaSeleccionada = null;
     }
 
-    guardarRutina(data : any) {
-      this.actividadService.createRutina(this.id,data).subscribe({
-        next: (res : any) => {
+  }
+
+  deleteRutina(id: string) {
+    console.log(id)
+      this.actividadService.deleteRutina(id).subscribe({
+        next: (res: any) => {
+          this.toast.success(res.message)
+          this.visible = false
+          this.getEjercicios()
+          this.getPlan()
+          this.getRutinas()
+        },
+        error: err => {
+          console.log(err)
+        }
+      })
+    
+
+  }
+
+  guardarRutina(data: any) {
+    if (this.id_rutina === null) {
+      this.actividadService.createRutina(this.id, data).subscribe({
+        next: (res: any) => {
           this.toast.success("Rutina creada con éxito")
           this.visible = false
           this.getPlan()
@@ -86,6 +120,21 @@ export class MyPlanComponent implements OnInit{
           console.log(err)
         }
       })
+    } else {
+      this.actividadService.editRutina(this.id_rutina, data).subscribe({
+        next: (res: any) => {
+          this.toast.success("Rutina editada con éxito")
+          this.visible = false
+          this.getPlan()
+          this.getRutinas()
+          this.getEjercicios()
+        },
+        error: err => {
+          console.log(err)
+        }
+      })
     }
-    
+  }
+
+
 }
