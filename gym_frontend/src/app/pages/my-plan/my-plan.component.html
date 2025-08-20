@@ -1,0 +1,94 @@
+<app-header></app-header>
+<section class="my-plan">
+    <div class="fase">
+        <h3 style="color: black;"><i class="pi pi-play" style="color: rgb(5, 5, 5);"></i> Entrada en calor</h3>
+        <p-button label="Agregar Ejercicio" severity="info" (onClick)="showDialog('INICIO', null)" />
+    </div>
+    <div style="padding: 20px;">
+        <ul class="list-group">
+            @for (item of rutinas; track $index) {
+            @if (item.fase === "INICIO") {
+            <li class="list-group-item" data-bs-toggle="collapse" [attr.href]="'#collapse-inicio-' + $index"
+                role="button" aria-expanded="false" [attr.aria-controls]="'collapse-inicio-' + $index">
+                - {{ item.ejercicio.name }}
+            </li>
+            <div class="collapse" [attr.id]="'collapse-inicio-' + $index">
+                <div class="card card-body">
+                    <p>{{item.ejercicio.description}}</p>
+                    <div class="acciones">
+                        <p-button label="Editar" icon="pi pi-refresh" size="small" iconPos="left" (onClick)="showDialog(item.fase,item.rutina_id)"/>
+                        <p-button label="Eliminar" severity="danger" size="small" icon="pi pi-trash" iconPos="left" (onClick)="deleteRutina(item.rutina_id)"/>
+                    </div>
+                </div>
+            </div>
+            }
+            } @empty {
+            <div class="text-bg-danger p-3">Agrega ejercicios de entrada en calor a tu rutina!!</div>
+            }
+        </ul>
+    </div>
+
+    <div class="fase">
+        <h3 style="color: black;"><i class="pi pi-play" style="color: rgb(5, 5, 5);"></i> Desarrollo</h3>
+        <p-button label="Agregar Ejercicio" severity="info" (onClick)="showDialog('DESARROLLO', null)" />
+    </div>
+    <div style="padding: 20px;">
+        <ul class="list-group">
+            @for (item of rutinas; track $index) {
+            @if (item.fase === "DESARROLLO") {
+            <li class="list-group-item" data-bs-toggle="collapse" [attr.href]="'#collapse-inicio-' + $index"
+                role="button" aria-expanded="false" [attr.aria-controls]="'collapse-inicio-' + $index">
+                - {{ item.ejercicio.name }}
+            </li>
+            <div class="collapse" [attr.id]="'collapse-inicio-' + $index">
+                <div class="card card-body">
+                    <p>{{item.ejercicio.description}}</p>
+                    <div class="acciones">
+                        <p-button label="Editar" icon="pi pi-refresh" size="small" iconPos="left" (onClick)="showDialog(item.fase,item.rutina_id)"/>
+                        <p-button label="Eliminar" severity="danger" size="small" icon="pi pi-trash" iconPos="left" (onClick)="deleteRutina(item.rutina_id)"/>
+                    </div>
+                </div>
+            </div>
+            }
+            } @empty {
+            <div class="text-bg-danger p-3">Agrega ejercicios de desarrollo a tu rutina!!</div>
+            }
+        </ul>
+    </div>
+
+    <div class="fase">
+        <h3 style="color: black;"><i class="pi pi-play" style="color: rgb(5, 5, 5);"></i> Finalización</h3>
+        <p-button label="Agregar Ejercicio" severity="info" (onClick)="showDialog('FINALIZACION', null)" />
+    </div>
+    <div style="padding: 20px;">
+        <ul class="list-group">
+            @for (item of rutinas; track $index) {
+            @if (item.fase === "FINALIZACION") {
+            <li class="list-group-item" data-bs-toggle="collapse" [attr.href]="'#collapse-inicio-' + $index"
+                role="button" aria-expanded="false" [attr.aria-controls]="'collapse-inicio-' + $index">
+                - {{ item.ejercicio.name }}
+            </li>
+            <div class="collapse" [attr.id]="'collapse-inicio-' + $index">
+                <div class="card card-body">
+                    <p>{{item.ejercicio.description}}</p>
+                    <div class="acciones">
+                        <p-button label="Editar" icon="pi pi-refresh" size="small" iconPos="left" (onClick)="showDialog(item.fase,item.rutina_id)"/>
+                        <p-button label="Eliminar" severity="danger" size="small" icon="pi pi-trash" iconPos="left" (onClick)="deleteRutina(item.rutina_id)"/>
+                    </div>
+                </div>
+            </div>
+            }
+            } @empty {
+            <div class="text-bg-danger p-3">Agrega ejercicios de finalización a tu rutina!!</div>
+            }
+        </ul>
+    </div>
+</section>
+
+<p-dialog header="{{ id_rutina ? 'Editar Rutina' : 'Crear Rutina' }}" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }" [closable]="true">
+    <div style="width: 90%;">
+        <app-rutina-form [rutinaToEdit]="rutinaSeleccionada" [ejercicios]="ejercicios"
+            (formSubmit)="guardarRutina($event)"></app-rutina-form>
+    </div>
+
+</p-dialog>

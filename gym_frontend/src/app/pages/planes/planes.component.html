@@ -1,0 +1,40 @@
+<app-header></app-header>
+<section class="ejercicios-page">
+<div class="button">
+        <p-button label="Crear Plan" [raised]="true" severity="contrast" (onClick)="showDialog()" />
+    </div>
+
+<div class="cards-container">
+        @if (planes.length >= 1) {
+        @for (plan of planes; track plan.plan_id) {
+
+            <p-accordion [value]="plan.plan_id" style="width: 100%;">
+        <p-accordion-panel value="0">
+            <p-accordion-header> {{ "Desde: " + (plan.desde | date:'longDate') + " - " + "Hasta: " + (plan.hasta | date:'longDate') }}</p-accordion-header>
+            <p-accordion-content>
+                <p class="m-0">
+                    <span style="font-weight: bold;">Finalidad: </span>
+                    {{plan.finalidad}}
+                </p>
+                <div style="width: 100%; display: flex; justify-content: end;">
+                    <button type="button" class="btn btn-info" (click)="goPlan(plan.plan_id)">Ver Plan</button>
+                </div>
+                
+            </p-accordion-content>
+        </p-accordion-panel>
+            </p-accordion>
+        }
+        } @else {
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;">
+                <p style="font-weight: bold; font-size: 3rem; color: black;">Crea tus propios planes!</p>
+            </div>
+        }
+    </div>
+    </section>
+
+    <p-dialog header="Crear Plan" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+    <div style="width: 90%;">
+        <app-plan-form (formPlanSubmit)="guardarPlan($event)"></app-plan-form>
+    </div>
+
+</p-dialog>

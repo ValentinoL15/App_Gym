@@ -1,0 +1,39 @@
+.card-body {
+  display: flex;
+  flex-direction: column; // en mobile mejor apilados
+  gap: 10px;
+}
+
+.fase {
+    padding: 20px;
+    border: 1px solid black;
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.card-body > p {
+  margin-bottom: 10px;
+}
+
+.card-body .acciones {
+  display: flex;
+  flex-wrap: wrap; // permite salto de línea si no entran
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+/* En pantallas medianas o grandes, que los botones vayan en fila */
+@media (min-width: 768px) {
+  .card-body {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-body .acciones {
+    width: auto;
+    justify-content: flex-end;
+  }
+}

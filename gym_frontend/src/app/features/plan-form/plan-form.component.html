@@ -1,0 +1,22 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-floating mb-2" style="margin: 20px; width: 100%;">
+        <input type="date" class="form-control" id="floatingInput" placeholder="Fecha inicio del plan" formControlName="desde">
+        <label for="floatingInput">Desde</label>
+    </div>
+
+    <div class="form-floating " style="margin: 20px; width: 100%;">
+        <input type="date" class="form-control" id="floatingInput" placeholder="Fecha fin del plan" formControlName="hasta">
+        <label for="floatingInput">Hasta</label>
+    </div>
+
+    <div class="form-floating " style="margin: 20px; width: 100%;">
+        <textarea class="form-control" placeholder="Finalidad del plan" formControlName="finalidad" id="floatingTextarea2" 
+            style="height: 100px; width: 100%;"></textarea>
+        <label for="floatingTextarea2">Finalidad del plan</label>
+    </div>
+
+    <div style="display: flex; justify-content: end; width: 100%;">
+    <button type="submit" class="btn btn-primary">{{ planToEdit ? 'Guardar Cambios' : 'Crear' }}</button>
+</div>
+
+</form>
