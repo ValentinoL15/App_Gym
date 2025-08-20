@@ -22,12 +22,12 @@
             "outputPath": "dist/gym_frontend",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "baseHref": "/gym_frontend/",
             "polyfills": [
               "zone.js"
             ],
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
+             "baseHref": "/" ,
             "assets": [
               {
                 "glob": "**/*",
