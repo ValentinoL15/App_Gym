@@ -1,8 +1,5 @@
 {
-  "builds": [
-    { "src": "gym_frontend/angular.json", "use": "@vercel/angular" }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "/" }
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
