@@ -75,7 +75,7 @@ public class EjercicioController {
     public ResponseEntity<?> deleteEjercicio(@PathVariable Long id) {
         try {
             ejercicioService.deleteEjercicio(id);
-            return ResponseEntity.ok("Ejercicio eliminado con éxito");
+            return ResponseEntity.ok(Map.of("message","Ejercicio eliminado con éxito"));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(Map.of("message", e.getMessage()));

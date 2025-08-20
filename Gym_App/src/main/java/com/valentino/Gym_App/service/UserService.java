@@ -6,6 +6,7 @@ import com.valentino.Gym_App.model.Usuario;
 import com.valentino.Gym_App.repository.IUserRepository;
 import com.valentino.Gym_App.service.ServicesIntefaces.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,15 +36,17 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Optional<UserDTO> getUser(Long id) {
-
-        Usuario user = userRepository.findById(id)
+    public Optional<UserDTO> getUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usu = userRepository.findUserEntityByUsername(username)
                 .orElseThrow(() -> new RuntimeException("No se encuentra el usuario"));
+
+
         return Optional.of(new UserDTO(
-            user.getUsername(),
-                user.getEmail(),
-                user.getDni(),
-                user.getAge()
+            usu.getUsername(),
+                usu.getEmail(),
+                usu.getDni(),
+                usu.getAge()
         ));
     }
 
@@ -65,9 +68,13 @@ public class UserService implements IUserService {
         List<Usuario> listUsers = userRepository.findAll();
         for (Usuario usu : listUsers) {
             if (usu.getUsername().equalsIgnoreCase(user.username())) {
-                throw new RuntimeException("Ya existe ese usuario, por favor elige otro nombre");
+                throw new RuntimeException("Ya existe ese username, por favor elige otro");
+            }
+            if(user.dni().equals(usu.getDni())){
+                throw new RuntimeException("Ya existe un usuario con ese dni, por favor cámbialo");
             }
         }
+
 
     Usuario usuario = new Usuario();
     usuario.setUsername(user.username());
@@ -120,6 +127,11 @@ public class UserService implements IUserService {
         }
 
         if(userDTO.dni() != null) {
+            for(Usuario us: listUsers){
+                if(userDTO.dni().equals(us.getDni())){
+                    throw new RuntimeException("Ya existe un usuario con ese dni, por favor cámbialo");
+                }
+            }
             if(userDTO.dni().chars().allMatch(Character::isDigit)){
                 throw new RuntimeException("El DNI debe contener solo números");
             }

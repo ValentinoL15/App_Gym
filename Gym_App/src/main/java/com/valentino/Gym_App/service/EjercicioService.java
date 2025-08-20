@@ -48,6 +48,7 @@ public class EjercicioService implements IEjercicioService {
 
         return myEjercicios.stream()
                 .map(ejercicio -> new EjercicioDTO(
+                        ejercicio.getEjercicio_id(),
                         ejercicio.getName(),
                         ejercicio.getDescription(),
                         ejercicio.getCategory()
@@ -60,6 +61,7 @@ public class EjercicioService implements IEjercicioService {
                 .orElseThrow(() -> new RuntimeException("No se encuentra el usuario"));
 
         return Optional.of(new EjercicioDTO(
+                ejercicio.getEjercicio_id(),
                 ejercicio.getName(),
                 ejercicio.getDescription(),
                 ejercicio.getCategory()
@@ -91,11 +93,22 @@ public class EjercicioService implements IEjercicioService {
         ejercicio.setUsuario(user);
         ejercicioRepository.save(ejercicio);
 
-        return new EjercicioDTO(ejercicio.getName(), ejercicio.getDescription(), ejercicio.getCategory());
+        return new EjercicioDTO(ejercicio.getEjercicio_id(),ejercicio.getName(), ejercicio.getDescription(), ejercicio.getCategory());
     }
 
     @Override
     public void deleteEjercicio(Long id) {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario user = userRepository.findUserEntityByUsername(username)
+                        .orElseThrow(() -> new RuntimeException("No se encuentra el user " + username));
+        List<Ejercicio> ejerciciosList = ejercicioRepository.findAll();
+        for(Ejercicio ejer: ejerciciosList) {
+            for(Ejercicio ej: user.getEjercicios()){
+                if(ej.getEjercicio_id().equals(ejer.getEjercicio_id())){
+                    throw new RuntimeException("Debes eliminar la/s rutina/s que contiene/n el ejercicio primero ");
+                }
+            }
+        }
         ejercicioRepository.deleteById(id);
 
     }
@@ -135,6 +148,7 @@ public class EjercicioService implements IEjercicioService {
 
         Ejercicio ejer = ejercicioRepository.save(ejercicio);
         return new EjercicioDTO(
+                ejercicio.getEjercicio_id(),
                 ejer.getName(),
                 ejer.getDescription(),
                 ejer.getCategory()

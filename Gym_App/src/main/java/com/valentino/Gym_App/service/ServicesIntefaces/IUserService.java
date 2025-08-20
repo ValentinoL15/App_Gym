@@ -10,7 +10,7 @@ public interface IUserService {
 
     List<UserDTO> getAllUsers();
 
-    Optional<UserDTO> getUser(Long id);
+    Optional<UserDTO> getUser();
 
     UserDTO saveUser(CreateUserDTO user);
 

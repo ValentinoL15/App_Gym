@@ -4,6 +4,7 @@ import com.valentino.Gym_App.dto.UserDTOs.CreateUserDTO;
 import com.valentino.Gym_App.dto.UserDTOs.UserDTO;
 import com.valentino.Gym_App.dto.loginDTOS.AuthResponseDTO;
 import com.valentino.Gym_App.dto.loginDTOS.LoginDTO;
+import com.valentino.Gym_App.model.Usuario;
 import com.valentino.Gym_App.repository.IUserRepository;
 import com.valentino.Gym_App.service.ServicesIntefaces.IUserService;
 import com.valentino.Gym_App.service.UserDetailsServiceImp;
@@ -64,6 +65,17 @@ public class AuthController {
             return ResponseEntity.ok(user);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("Error", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getUser(){
+        try {
+            UserDTO user = userService.getUser()
+                    .orElseThrow(() -> new RuntimeException("No se encuentra el usuario"));
+            return ResponseEntity.ok(user);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
         }
     }
 

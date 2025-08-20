@@ -11,11 +11,11 @@ import java.util.Optional;
 
 public interface IRutinaService {
 
-    List<RutinaDTO> getRutinas();
+    List<RutinaDTO> getRutinas(Long id);
 
     Optional<RutinaDTO> getRutina(Long id);
 
-    RutinaDTO saveRutina(Long id_plan, Long id_ejercicio ,CreateRutinaDTO rutinaDTO);
+    RutinaDTO saveRutina(Long id_plan,CreateRutinaDTO rutinaDTO);
 
     void deleteRutinaById(Long id);
 

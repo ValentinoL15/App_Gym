@@ -40,23 +40,20 @@ public class RutinaService implements IRutinaService {
     private IUserRepository userRepository;
 
     @Override
-    public List<RutinaDTO> getRutinas() {
+    public List<RutinaDTO> getRutinas(Long id) {
 
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        Usuario user = userRepository.findUserEntityByUsername(username)
-                .orElseThrow(() -> new RuntimeException("No se encuntra el usuario " + username));
+        Plan plan = planRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se encuentra el plan"));
 
-        List<Rutina> rutinasList = rutinaRepository.findAll();
-        Set<Rutina> myRutinas = new HashSet<>();
-
-        for(Rutina rut: rutinasList) {
-            if(rut.getPlan().getUsuario().getUser_id().equals(user.getUser_id())){
-                myRutinas.add(rut);
-            }
-        }
-
-        return myRutinas.stream()
+        return plan.getRutinas().stream()
                 .map(rutina -> new RutinaDTO(
+                        rutina.getRutina_id(),
+                        new EjercicioDTO(
+                                rutina.getEjercicio().getEjercicio_id(),
+                                rutina.getEjercicio().getName(),
+                                rutina.getEjercicio().getDescription(),
+                                rutina.getEjercicio().getCategory()
+                        ),
                         rutina.getRepeticiones(),
                         rutina.getSeries(),
                         rutina.getPeso(),
@@ -68,6 +65,13 @@ public class RutinaService implements IRutinaService {
     public Optional<RutinaDTO> getRutina(Long id) {
         Rutina rutina = rutinaRepository.findById(id).orElseThrow(() -> new RuntimeException("No se encuentra la rutina"));
         return Optional.of(new RutinaDTO(
+                rutina.getRutina_id(),
+                new EjercicioDTO(
+                        rutina.getEjercicio().getEjercicio_id(),
+                        rutina.getEjercicio().getName(),
+                        rutina.getEjercicio().getDescription(),
+                        rutina.getEjercicio().getCategory()
+                ),
                 rutina.getRepeticiones(),
                 rutina.getSeries(),
                 rutina.getPeso(),
@@ -76,13 +80,13 @@ public class RutinaService implements IRutinaService {
     }
 
     @Override
-    public RutinaDTO saveRutina(Long id_plan, Long id_ejercicio, CreateRutinaDTO rutinaDTO) {
+    public RutinaDTO saveRutina(Long id_plan, CreateRutinaDTO rutinaDTO) {
 
         Plan plan = planRepository.findById(id_plan)
-                .orElseThrow(() -> new RuntimeException("No se enceuntra el plan"));
+                .orElseThrow(() -> new RuntimeException("No se encuentra el plan"));
 
-        Ejercicio ejer = ejercicioRepository.findById(id_ejercicio)
-                .orElseThrow(() -> new RuntimeException("No se encuentra el ejercicio"));
+        Ejercicio ejercicio = ejercicioRepository.findById(rutinaDTO.ejercicio_id())
+                .orElseThrow(() -> new RuntimeException("Ejercicio no encontrado"));
 
         if(rutinaDTO.repeticiones() == null) {
             throw new RuntimeException("Debes colocar repeteiciones");
@@ -93,15 +97,23 @@ public class RutinaService implements IRutinaService {
         if(rutinaDTO.peso() == null) {
             throw new RuntimeException("Debes colocar el peso que vas a realizar");
         }
+
         Rutina rutina = new Rutina();
-        rutina.setEjercicio(ejer);
+        rutina.setEjercicio(ejercicio);
         rutina.setRepeticiones(rutinaDTO.repeticiones());
         rutina.setSeries(rutinaDTO.series());
         rutina.setPeso(rutinaDTO.peso());
         rutina.setFase(rutinaDTO.fase());
         rutina.setPlan(plan);
         rutinaRepository.save(rutina);
-        return new RutinaDTO(rutina.getRepeticiones(),rutina.getSeries(),rutina.getPeso(),rutina.getFase());
+        return new RutinaDTO(
+                rutina.getRutina_id(),
+                new EjercicioDTO(
+                rutina.getEjercicio().getEjercicio_id(),
+                rutina.getEjercicio().getName(),
+                rutina.getEjercicio().getDescription(),
+                rutina.getEjercicio().getCategory()
+        ),rutina.getRepeticiones(),rutina.getSeries(),rutina.getPeso(),rutina.getFase());
     }
 
     @Override
@@ -139,6 +151,13 @@ public class RutinaService implements IRutinaService {
         }
 
         rutinaRepository.save(rutina);
-        return new RutinaDTO(rutina.getRepeticiones(),rutina.getSeries(),rutina.getPeso(),rutina.getFase());
+        return new RutinaDTO(
+                rutina.getRutina_id(),
+                new EjercicioDTO(
+                rutina.getEjercicio().getEjercicio_id(),
+                rutina.getEjercicio().getName(),
+                rutina.getEjercicio().getDescription(),
+                rutina.getEjercicio().getCategory()
+        ),rutina.getRepeticiones(),rutina.getSeries(),rutina.getPeso(),rutina.getFase());
     }
 }

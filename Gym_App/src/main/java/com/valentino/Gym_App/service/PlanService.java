@@ -44,6 +44,7 @@ public class PlanService implements IPlanService {
         }
         return myPlanes.stream()
                 .map(plan -> new PlanDTO(
+                        plan.getPlan_id(),
                         plan.getDesde(),
                         plan.getHasta(),
                         plan.getFinalidad()
@@ -56,6 +57,7 @@ public class PlanService implements IPlanService {
         Plan plan = planRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("No se encuentra el plan"));
         return Optional.of(new PlanDTO(
+                plan.getPlan_id(),
                 plan.getDesde(),
                 plan.getHasta(),
                 plan.getFinalidad()
@@ -83,7 +85,7 @@ public class PlanService implements IPlanService {
         plan.setFinalidad(planDTO.finalidad());
 
         planRepository.save(plan);
-        return new PlanDTO(plan.getDesde(),plan.getHasta(),plan.getFinalidad());
+        return new PlanDTO(plan.getPlan_id(),plan.getDesde(),plan.getHasta(),plan.getFinalidad());
 
     }
 
@@ -117,7 +119,7 @@ public class PlanService implements IPlanService {
         }
 
         planRepository.save(plan);
-        return new PlanDTO(plan.getDesde(),plan.getHasta(),plan.getFinalidad());
+        return new PlanDTO(plan.getPlan_id(),plan.getDesde(),plan.getHasta(),plan.getFinalidad());
 
     }
 }

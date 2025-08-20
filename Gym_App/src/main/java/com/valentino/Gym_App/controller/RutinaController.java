@@ -24,10 +24,10 @@ public class RutinaController {
     private IRutinaService rutinaService;
 
     @PreAuthorize("isAuthenticated()")
-    @GetMapping
-    public ResponseEntity<?> getRutinas() {
+    @GetMapping("/planes-rutinas/{id}")
+    public ResponseEntity<?> getRutinas(@PathVariable Long id) {
         try {
-            List<RutinaDTO> rutinasList = rutinaService.getRutinas();
+            List<RutinaDTO> rutinasList = rutinaService.getRutinas(id);
             return ResponseEntity.ok(rutinasList);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
@@ -46,12 +46,11 @@ public class RutinaController {
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/crear-rutina")
-    public ResponseEntity<?> createRutina(@RequestParam Long id_plan,
-                                          @RequestParam Long id_ejercicio,
+    @PostMapping("/crear-rutina/{id_plan}")
+    public ResponseEntity<?> createRutina(@PathVariable Long id_plan,
                                           @RequestBody CreateRutinaDTO rutinaDTO) {
         try {
-            RutinaDTO rutina = rutinaService.saveRutina(id_plan,id_ejercicio,rutinaDTO);
+            RutinaDTO rutina = rutinaService.saveRutina(id_plan,rutinaDTO);
             return ResponseEntity.ok(rutina);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
@@ -61,10 +60,10 @@ public class RutinaController {
 
     @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/eliminar-rutina/{id}")
-    public ResponseEntity<?> deleteRutina(Long id) {
+    public ResponseEntity<?> deleteRutina(@PathVariable Long id) {
         try {
             rutinaService.deleteRutinaById(id);
-            return ResponseEntity.ok("Rutina eliminada con éxito");
+            return ResponseEntity.ok(Map.of("message", "Rutina eliminada con éxito"));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message", e.getMessage()));
         }
