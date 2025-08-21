@@ -15,8 +15,8 @@ public class WebConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**") // permitir todas las rutas
                         .allowedOrigins(
-                                "http://localhost:4200"
-                                // <-- poné la URL real de tu frontend en Vercel
+                                "http://localhost:4200",
+                                "https://app-gym-zeta.vercel.app"// <-- poné la URL real de tu frontend en Vercel
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
